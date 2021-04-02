@@ -4,35 +4,55 @@ import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './stores/rootReducer'
 import { Provider } from 'react-redux';
-import CreateLoanRequest from './components/CreateLoanRequest';
-import Navbar from './components/ReusableComponents/Navbar';
-import Signup from './components/SignUp page/SignupPage'
-import DashboardTableComponent from './components/DashboardTable/DashboardTableComponent';
-import Login from './components/Login page/LoginPage';
-import LandingPage from './components/landingPage/LandingPage';
-import UserLoanPage from './components/UserLoanRequest/UserLoanPage';
-import Permission from './components/Permission/Permission';
+import ProductList from './pages/ProductList.page';
+import Navbar from './components/Navbar';
+import HomePage from './pages/Home.pages';
 // import fetchProducts from './store/oneKiosk/action'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Announcement from './components/Announcement';
+import Footer from './components/Footer';
+import Product from './pages/Product.page';
+import Register from './pages/Register.page';
+import Login from './pages/Login.page';
+import styled from 'styled-components'
+import Cart from './pages/Cart.page';
+
 
 const middlewares = [thunk]
 const store = createStore(rootReducer, {}, applyMiddleware(...middlewares));
+
+const FixedTop = styled.div`
+  position: fixed;
+  top:0;
+  z-index: 4;
+  width: 100%;
+`
+const PageContainer = styled.div`
+  margin-top: 120px;
+`
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <div className="App">
          <Router>
-         <Navbar />
-           <Switch>
-            <Route exact path='/' component={LandingPage} />
-            <Route path='/createloanrequest' component={CreateLoanRequest} name='loan request' />;
-            <Route path='/loanrequestdashbord' component={DashboardTableComponent} />
-            <Route path='/signup' component={Signup} />
+          <FixedTop>
+            <Announcement />
+            <Navbar />
+          </FixedTop>
+          <PageContainer>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route path='/product-list' component={ProductList} name='loan request' />;
+            <Route path='/product/:no' component={Product} exact />
+            <Route path='/signup' component={Register} />
             <Route path='/login' component={Login} />
-            <Route path='/userloanpage' component={UserLoanPage} />
-            <Route path='/permission' component={Permission} />
+            <Route path='/cart' component={Cart} />
+            {/*<Route path='/permission' component={Permission} /> */}
            </Switch>
+          </PageContainer>
+           
+           <Footer />
          </Router>
         </div>
       </Provider>
