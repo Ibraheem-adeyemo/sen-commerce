@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import userReducer from './Users/userReducer'
-import requestLoanReducer from './requestLoan/requestLoanReducer';
+import { productReducer } from "./product/product.reducer";
 
 const rootReducer = combineReducers({
   user: userReducer,
-  request: requestLoanReducer
+  productReducer
 })
 
 export default rootReducer
